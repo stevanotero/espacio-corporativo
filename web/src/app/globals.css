@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+/* Colores del Figma (pantalla 04 · Comunicados oficiales).
+   Se usan en las clases de Tailwind, por ejemplo: bg-marca, text-tinta, bg-fondo */
+@theme {
+  --color-marca: #201a7a;
+  --color-marca-claro: #3b368a;
+  --color-fondo: #f5f6fa;
+  --color-tinta: #141631;
+  --color-exito: #10b981;
+  --color-alerta: #ef4444;
+  --color-multired: #f59e0b;
+
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+}
