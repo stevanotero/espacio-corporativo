@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Inbox, Hash, Activity, User, LogOut, type LucideIcon } from "lucide-react";
+import { useSesion } from "@/components/sesion/SesionProvider";
 
 // Menú lateral del Figma. Para agregar una sección nueva, se agrega una línea aquí.
 const SECCIONES: { ruta: string; nombre: string; icono: LucideIcon }[] = [
@@ -15,6 +16,13 @@ const SECCIONES: { ruta: string; nombre: string; icono: LucideIcon }[] = [
 
 export default function MenuLateral() {
   const rutaActual = usePathname();
+  const { usuario, cerrarSesion } = useSesion();
+  const iniciales = usuario?.nombre
+    .split(" ")
+    .slice(0, 2)
+    .map((p) => p[0])
+    .join("")
+    .toUpperCase();
 
   return (
     <aside className="fixed inset-y-0 left-0 flex w-[260px] flex-col bg-marca px-4 py-7 text-white">
@@ -45,14 +53,21 @@ export default function MenuLateral() {
         })}
       </nav>
 
-      {/* Usuario de ejemplo: se reemplaza por el usuario real cuando exista el login */}
       <div className="mt-auto flex items-center gap-3 rounded-xl bg-white/10 p-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-sm">?</div>
-        <div className="flex-1">
-          <p className="text-sm font-medium">Sin sesión</p>
-          <p className="text-[11px] text-white/70">El login llega en el módulo de autenticación</p>
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-medium">
+          {iniciales ?? "…"}
         </div>
-        <LogOut size={16} className="text-white/60" />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-medium">{usuario?.nombre ?? "Cargando…"}</p>
+          {usuario && (
+            <span className="mt-0.5 inline-block max-w-full truncate rounded bg-white/15 px-1.5 py-0.5 text-[11px] text-white/80">
+              {usuario.area ? `Área: ${usuario.area.nombre}` : usuario.empresa.nombre}
+            </span>
+          )}
+        </div>
+        <button onClick={cerrarSesion} className="rounded p-1 text-white/60 hover:bg-white/10 hover:text-white" aria-label="Cerrar sesión" title="Cerrar sesión">
+          <LogOut size={16} />
+        </button>
       </div>
     </aside>
   );

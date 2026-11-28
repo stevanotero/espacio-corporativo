@@ -100,7 +100,9 @@ npm install
 #    Copiar backend/.env.example como backend/.env y llenar DATABASE_URL
 #    Copiar web/.env.example como web/.env
 
-# 4. Crear las tablas y los datos iniciales
+#    En backend/.env llenar también JWT_SECRET y los datos ADMIN_* del administrador inicial
+
+# 4. Crear las tablas, las empresas y el administrador inicial
 npm run db:migrate
 npm run db:seed
 
@@ -109,7 +111,23 @@ npm run dev:backend    # http://localhost:4001/api/salud
 npm run dev:web        # http://localhost:4000
 ```
 
-En la página de inicio debe aparecer **"Web, backend y base de datos conectados"** con Servired y Multired.
+Abre http://localhost:4000, entra con el documento y la contraseña de `ADMIN_DOCUMENTO` y `ADMIN_CONTRASENA`, y en el inicio debe aparecer **"Web, backend y base de datos conectados"**.
+
+## Inicio de sesión y seguridad
+
+- **Login por documento y contraseña.** La contraseña se guarda con hash bcrypt.
+- **Sesión en cookies `httpOnly` y `sameSite=strict`:** el JavaScript de la página no puede leerlas y otros sitios no pueden usarlas.
+- **Dos tokens:** el de acceso (15 min) va en cada petición; el de sesión (7 días) solo sirve para renovar el acceso y en la base se guarda su hash. Cada renovación cambia el token de sesión.
+- **Bloqueo temporal** tras `MAX_INTENTOS_LOGIN` contraseñas incorrectas y límite de 20 intentos por IP cada 15 minutos.
+- **Permisos:** en el backend, `autenticar` exige sesión y `requiereRol("admin", ...)` limita por rol. En la web, `src/middleware.ts` manda al login a quien no tenga sesión.
+
+## Auditoría
+
+Todo se registra con `auditoriaService.registrar({ accion, entidad, ... })` (en `backend/src/modules/auditoria`). La tabla `auditoria`:
+
+- **No se puede editar ni borrar:** un trigger de PostgreSQL rechaza `UPDATE`, `DELETE` y `TRUNCATE`.
+- **Está partida por mes** (`auditoria_2026_11`, `auditoria_2026_12`...). El backend crea las particiones al arrancar y una vez al día.
+- Requiere PostgreSQL 13 o superior.
 
 ## Pruebas
 
