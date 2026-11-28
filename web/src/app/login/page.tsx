@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Megaphone, ShieldCheck, Users } from "lucide-react";
 import FormularioLogin from "./FormularioLogin";
+import LogosEmpresas from "@/components/marca/LogosEmpresas";
 
 export const metadata = { title: "Iniciar sesión · Espacio Corporativo" };
 
@@ -33,19 +34,17 @@ export default function LoginPage() {
           </ul>
         </div>
 
-        <p className="text-sm font-bold">
-          <span>Servired</span> <span className="text-white/40">|</span> <span className="text-multired">Multired</span>
-        </p>
+        {/* Los logos van sobre una franja blanca: sobre el azul no se ven bien */}
+        <div className="w-fit rounded-xl bg-white px-5 py-3">
+          <LogosEmpresas alto={30} />
+        </div>
       </section>
 
       {/* Formulario */}
       <section className="flex items-center justify-center bg-fondo p-6">
         <div className="w-full max-w-sm">
-          <div className="mb-8 lg:hidden">
-            <p className="text-sm font-bold">
-              <span className="text-marca">Servired</span> <span className="text-tinta/30">|</span>{" "}
-              <span className="text-multired">Multired</span>
-            </p>
+          <div className="mb-10">
+            <LogosEmpresas alto={36} />
           </div>
           <h2 className="text-2xl font-semibold">Iniciar sesión</h2>
           <p className="mt-1 mb-8 text-sm text-tinta/60">Ingresa con tu número de documento.</p>

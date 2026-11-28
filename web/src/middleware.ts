@@ -19,7 +19,8 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// No aplica a la API, ni a los archivos estáticos de Next.js
+// No aplica a la API, a los archivos internos de Next.js ni a las imágenes públicas
+// (los logos deben cargar en el login, cuando todavía no hay sesión)
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|logos/|.*\\.(?:png|jpg|jpeg|svg|webp|ico)$).*)"],
 };

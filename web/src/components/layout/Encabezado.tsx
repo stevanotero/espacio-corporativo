@@ -1,4 +1,5 @@
 import { Search, Bell } from "lucide-react";
+import LogosEmpresas from "@/components/marca/LogosEmpresas";
 
 // Barra superior del Figma: título de la sección, buscador, notificaciones y marcas.
 export default function Encabezado({ seccion, titulo }: { seccion: string; titulo: string }) {
@@ -16,10 +17,9 @@ export default function Encabezado({ seccion, titulo }: { seccion: string; titul
         <button className="flex h-9 w-9 items-center justify-center rounded-lg border border-black/10" aria-label="Notificaciones">
           <Bell size={16} />
         </button>
-        <p className="border-l border-black/10 pl-4 text-sm font-bold">
-          <span className="text-marca">Servired</span> <span className="text-tinta/30">|</span>{" "}
-          <span className="text-multired">Multired</span>
-        </p>
+        <div className="border-l border-black/10 pl-4">
+          <LogosEmpresas alto={26} />
+        </div>
       </div>
     </header>
   );
