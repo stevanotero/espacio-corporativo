@@ -8,6 +8,20 @@
       "when": 1795788884405,
       "tag": "0000_inicial",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795876017901,
+      "tag": "0001_login_usuarios_sesiones",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795876025046,
+      "tag": "0002_auditoria_particionada",
+      "breakpoints": true
     }
   ]
 }

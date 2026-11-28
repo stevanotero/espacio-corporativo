@@ -9,6 +9,7 @@ export default defineConfig({
       NODE_ENV: "test",
       DATABASE_URL: "postgresql://test:test@localhost:5432/test",
       LOG_LEVEL: "error",
+      JWT_SECRET: "clave-de-pruebas-con-mas-de-32-caracteres-123",
     },
   },
 });

@@ -10,6 +10,24 @@ const esquemaEnv = z.object({
   DATABASE_URL: z.string().startsWith("postgresql://", "DATABASE_URL debe empezar por postgresql://"),
   CORS_ORIGIN: z.string().default("http://localhost:4000"),
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
+
+  // ── Inicio de sesión ──
+  // Clave para firmar los tokens. Debe ser larga y secreta (mínimo 32 caracteres).
+  JWT_SECRET: z.string().min(32, "JWT_SECRET debe tener al menos 32 caracteres"),
+  // Cuánto dura el token de acceso (se renueva solo mientras la sesión siga abierta)
+  ACCESO_MINUTOS: z.coerce.number().int().positive().default(15),
+  // Cuántos días dura una sesión sin volver a pedir contraseña
+  SESION_DIAS: z.coerce.number().int().positive().default(7),
+  // Bloqueo temporal tras varios intentos fallidos
+  MAX_INTENTOS_LOGIN: z.coerce.number().int().positive().default(5),
+  MINUTOS_BLOQUEO: z.coerce.number().int().positive().default(15),
+  // En producción (HTTPS) las cookies deben ser "secure"
+  COOKIE_SECURE: z
+    .enum(["true", "false"])
+    .default("false")
+    .transform((v) => v === "true"),
+  // Cuántos proxies hay delante del backend (Next.js / nginx), para leer la IP real en la auditoría
+  TRUST_PROXY: z.coerce.number().int().min(0).default(1),
 });
 
 const resultado = esquemaEnv.safeParse(process.env);
