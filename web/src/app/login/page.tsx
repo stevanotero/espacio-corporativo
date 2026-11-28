@@ -11,7 +11,10 @@ export default function LoginPage() {
     <main className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
       {/* Panel de marca (mismo azul del menú lateral del Figma) */}
       <section className="hidden flex-col justify-between bg-marca p-12 text-white lg:flex">
-        <p className="font-semibold leading-tight">Espacio Corporativo</p>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-sm font-bold text-marca">SM</div>
+          <p className="font-semibold leading-tight">Espacio Corporativo</p>
+        </div>
 
         <div className="max-w-md">
           <h1 className="text-3xl font-semibold leading-tight">La comunicación oficial de la empresa, en un solo lugar.</h1>
